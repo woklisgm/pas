@@ -106,8 +106,8 @@ def parse_json_file(hostname):
                                 | {Subnet: "n/a", IpAddress: .configuration.ip, InterfaceName: .logicalname, MacAddress: .serial}''', main_data), ensure_ascii=False, indent=4),
         MemoryInfo = json.dumps(pyjq.all('''recurse(.children[]?)
                                 | select ((.class == "memory") and (.id|startswith("bank:")) and (.size != null))
-                                | {Manufacturer: .vendor, Capacity: "(.size / 1024 / 1024)",
-                                type: .description, PartNumber: .product, SerialNumber: .serial, Slot: .slot, speed: "(.clock / 1000000)"}''', main_data), ensure_ascii=False, indent=4),
+                                | {Manufacturer: .vendor, Capacity: (.size / 1024 / 1024),
+                                type: .description, PartNumber: .product, SerialNumber: .serial, Slot: .slot, speed: (.clock / 1000000)}''', main_data), ensure_ascii=False, indent=4),
         Contollers = json.dumps(pyjq.all('''recurse(.children[]?)
                                  | select (.class == "storage" and .capabilities.raid == true) | {Manufacturer: .vendor, Version: .product}''', main_data), ensure_ascii=False, indent=4),
         Drives = json.dumps(pyjq.all('''recurse(.children[]?)
