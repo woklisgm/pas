@@ -94,7 +94,9 @@ def parse_json_file(hostname):
         UUID = pyjq.one(".configuration.uuid", main_data),
         CpuName = pyjq.first('recurse(.children[]?) | select(.class=="processor") | .product', main_data),
         CpuCount = pyjq.one('[recurse(.children[]?) | select((.class == "processor") and (.id | startswith("cpu:")))] | length', main_data),
-        CpuCores = pyjq.first('recurse(.children[]?) | select(.class=="processor") | .configuration.cores', main_data),
+#       либо этот CpuCount, верхний, кажется, не правильно работает
+#       CpuCount = pyjq.one('[recurse(.children[]?) | select((.class == "processor") and (.id == "cpu"))] | length', main_data)
+	CpuCores = pyjq.first('recurse(.children[]?) | select(.class=="processor") | .configuration.cores', main_data),
         CpuThreads = pyjq.first('recurse(.children[]?) | select(.class=="processor") | .configuration.threads', main_data),
         CpuSpeed = pyjq.first('recurse(.children[]?) | select(.class=="processor") | (.size / 1000000)', main_data),
         OsVersion = pyjq.first('recurse(.children[]?) | select((.id == "network") and (.class == "network")) | .configuration.driverversion', main_data),
