@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 import json
 import os
+
+# перед запуском установить  pyjq 
+# apt-get install autoconf automake build-essential libtool python-dev
+# pip3 install pyjq 
 import pyjq
 
 # смотрим список файлов в директории где лежит сам скрипт
